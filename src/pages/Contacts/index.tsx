@@ -1,12 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { Button } from "components";
+import { Button, Modal } from "components";
 import useContacts from "./useContacts";
 import ContactItem from "./ContactItem";
+import ContactView from "./ContactView";
 
 const Contacts = () => {
-  const { loading, error, contacts, onRemove } = useContacts();
+  const { loading, error, contacts, onSelect, onRemove, selectedContact, onCloseModal } =
+    useContacts();
 
   return (
     <Container>
@@ -22,9 +24,23 @@ const Contacts = () => {
       )}
 
       {contacts.length > 0 ? (
-        <ContactItem contacts={contacts} onRemove={onRemove} />
+        <ContactsContainer>
+          {contacts.map((contact) => (
+            <ContactItem
+              key={contact.id}
+              contact={contact}
+              onSelect={onSelect}
+              onRemove={onRemove}
+            />
+          ))}
+        </ContactsContainer>
       ) : (
         <div>No contacts found from the list</div>
+      )}
+      {selectedContact && (
+        <Modal onClose={onCloseModal}>
+          <ContactView contact={selectedContact} />
+        </Modal>
       )}
     </Container>
   );
@@ -49,4 +65,10 @@ const Error = styled.div`
   span {
     color: red;
   }
+`;
+
+const ContactsContainer = styled.div`
+  display: flex;
+  grid-gap: 10px;
+  flex-wrap: wrap;
 `;

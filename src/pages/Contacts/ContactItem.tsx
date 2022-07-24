@@ -4,24 +4,23 @@ import { Contact } from "generated/graphql";
 import { Button } from "components";
 
 type ContactItemProps = {
-  contacts: Contact[];
+  contact: Contact;
+  onSelect: (contactId: string) => void;
   onRemove: (contactId: string) => void;
 };
 
-const ContactItem = ({ contacts, onRemove }: ContactItemProps) => {
+const ContactItem = ({ contact, onSelect, onRemove }: ContactItemProps) => {
   return (
     <Container>
-      {contacts.map((contact) => {
-        return (
-          <Card key={contact.id}>
-            <Remove onClick={() => onRemove(contact.id)}>X</Remove>
-            <div>{contact.gender}</div>
-            <div>{contact.name.first}</div>
-            <div>{contact.name.last}</div>
-            <a href={`mailto:${contact.email}`}>{contact.email}</a>
-          </Card>
-        );
-      })}
+      <Remove onClick={() => onRemove(contact.id)}>X</Remove>
+      <div>{contact.gender}</div>
+      <div>{contact.name.first}</div>
+      <div>{contact.name.last}</div>
+      <div>
+        <a href={`mailto:${contact.email}`}>{contact.email}</a>
+      </div>
+
+      <More onClick={() => onSelect(contact.id)}>More Information</More>
     </Container>
   );
 };
@@ -29,13 +28,6 @@ const ContactItem = ({ contacts, onRemove }: ContactItemProps) => {
 export default ContactItem;
 
 const Container = styled.div`
-  display: flex;
-  grid-gap: 10px;
-  flex-wrap: wrap;
-
-  `;
-  
-  const Card = styled.div`
   position: relative;
   padding: ${({ theme }) => theme.space.md}px;
   border-radius: ${({ theme }) => theme.radii.lg}px;
@@ -50,4 +42,9 @@ const Remove = styled(Button)`
   border: 0 !important;
 
   padding: 8px 12px;
+`;
+
+const More = styled(Button)`
+  margin-top: ${({ theme }) => theme.space.md}px;
+  width: 100%;
 `;
