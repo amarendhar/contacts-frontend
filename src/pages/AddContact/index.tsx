@@ -1,28 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { useHistory } from 'react-router-dom'
 import { Button, Input } from "components";
-import { useAddContactMutation } from "generated/graphql";
 import useAddContact from "./useAddContact";
 
-type ContactFields = {
-  gender: string;
-  title: string;
-  first: string;
-  last: string;
-  email: string;
-  street: string;
-  city: string;
-  state: string;
-  country: string;
-  dob: string;
-  phone: string;
-};
-
 const AddContact = () => {
-  const history = useHistory()
-  const { fields } = useAddContact();
-  const [addContactMutation] = useAddContactMutation();
+  const { fields, onSubmit } = useAddContact();
 
   return (
     <Container>
@@ -31,50 +13,7 @@ const AddContact = () => {
           e.preventDefault();
           // ToDo: Do validations here to show a error-toast on fail.
 
-          const {
-            gender,
-            title,
-            first,
-            last,
-            email,
-            street,
-            city,
-            state,
-            country,
-            dob,
-            phone,
-          } = fields.reduce((acc, { name, value }) => {
-            // @ts-ignore
-            acc[name] = value;
-
-            return acc;
-          }, {} as ContactFields);
-
-          const { data } = await addContactMutation({
-            variables: {
-              contactInput: {
-                gender,
-                name: {
-                  title,
-                  first,
-                  last,
-                },
-                email,
-                location: {
-                  street,
-                  city,
-                  state,
-                  country,
-                },
-                dob,
-                phone,
-              },
-            },
-          });
-
-          if (data?.addContact?.status === 'success') {
-            history.push('/')
-          }
+          onSubmit();
         }}
       >
         {fields.map(({ type, name, label, value, setState, ...restProps }) => (

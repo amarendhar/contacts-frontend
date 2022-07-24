@@ -1,6 +1,25 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
+import { useHistory } from "react-router-dom";
+import { useAddContactMutation } from "generated/graphql";
+
+type ContactFields = {
+  gender: string;
+  title: string;
+  first: string;
+  last: string;
+  email: string;
+  street: string;
+  city: string;
+  state: string;
+  country: string;
+  dob: string;
+  phone: string;
+};
 
 const useAddContact = () => {
+  const history = useHistory();
+  const [addContactMutation] = useAddContactMutation();
+
   const [gender, setGender] = useState("male");
 
   const [title, setTitle] = useState("mr");
@@ -24,7 +43,7 @@ const useAddContact = () => {
         type: "select",
         name: "gender",
         label: "Gender",
-        options: ['male', 'female'],
+        options: ["male", "female"],
         value: gender,
         setState: setGender,
       },
@@ -33,7 +52,7 @@ const useAddContact = () => {
         type: "select",
         name: "title",
         label: "Title",
-        options: ['mr', 'ms', 'mrs'],
+        options: ["mr", "ms", "mrs"],
         value: title,
         setState: setTitle,
       },
@@ -136,9 +155,57 @@ const useAddContact = () => {
     setPhone,
   ]);
 
+  const onSubmit = useCallback(async () => {
+    const {
+      gender,
+      title,
+      first,
+      last,
+      email,
+      street,
+      city,
+      state,
+      country,
+      dob,
+      phone,
+    } = fields.reduce((acc, { name, value }) => {
+      // @ts-ignore
+      acc[name] = value;
+
+      return acc;
+    }, {} as ContactFields);
+
+    const { data } = await addContactMutation({
+      variables: {
+        contactInput: {
+          gender,
+          name: {
+            title,
+            first,
+            last,
+          },
+          email,
+          location: {
+            street,
+            city,
+            state,
+            country,
+          },
+          dob,
+          phone,
+        },
+      },
+    });
+
+    if (data?.addContact?.status === "success") {
+      history.push("/");
+    }
+  }, [history, addContactMutation, fields]);
+
   return {
-    fields
-  }
+    fields,
+    onSubmit,
+  };
 };
 
 export default useAddContact;

@@ -18,6 +18,7 @@ const GetContactsQuery = gql`
         country
       }
       dob
+      phone
       picture {
         large
         medium

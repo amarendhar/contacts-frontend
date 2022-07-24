@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
-const addContactMutation = gql`
-  mutation addContact($contactInput: ContactInput) {
-    addContact(contactInput: $contactInput) {
+const removeContactMutation = gql`
+  mutation removeContact($contactId: String!) {
+    removeContact(contactId: $contactId) {
       status
       message
       result {
@@ -32,4 +32,4 @@ const addContactMutation = gql`
   }
 `;
 
-export default addContactMutation;
+export default removeContactMutation;

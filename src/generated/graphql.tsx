@@ -135,7 +135,34 @@ export type AddContactMutation = (
     & Pick<AddContact, 'status' | 'message'>
     & { result: (
       { __typename?: 'Contact' }
-      & Pick<Contact, 'id' | 'gender' | 'email' | 'dob'>
+      & Pick<Contact, 'id' | 'gender' | 'email' | 'dob' | 'phone'>
+      & { name: (
+        { __typename?: 'Name' }
+        & Pick<Name, 'title' | 'first' | 'last'>
+      ), location: (
+        { __typename?: 'Location' }
+        & Pick<Location, 'street' | 'city' | 'state' | 'country'>
+      ), picture?: Maybe<(
+        { __typename?: 'Picture' }
+        & Pick<Picture, 'large' | 'medium' | 'thumbnail'>
+      )> }
+    ) }
+  )> }
+);
+
+export type RemoveContactMutationVariables = Exact<{
+  contactId: Scalars['String'];
+}>;
+
+
+export type RemoveContactMutation = (
+  { __typename?: 'Mutation' }
+  & { removeContact?: Maybe<(
+    { __typename?: 'RemoveContact' }
+    & Pick<RemoveContact, 'status' | 'message'>
+    & { result: (
+      { __typename?: 'Contact' }
+      & Pick<Contact, 'id' | 'gender' | 'email' | 'dob' | 'phone'>
       & { name: (
         { __typename?: 'Name' }
         & Pick<Name, 'title' | 'first' | 'last'>
@@ -157,7 +184,7 @@ export type GetContactsQuery = (
   { __typename?: 'Query' }
   & { getContacts: Array<(
     { __typename?: 'Contact' }
-    & Pick<Contact, 'id' | 'gender' | 'email' | 'dob'>
+    & Pick<Contact, 'id' | 'gender' | 'email' | 'dob' | 'phone'>
     & { name: (
       { __typename?: 'Name' }
       & Pick<Name, 'title' | 'first' | 'last'>
@@ -193,6 +220,7 @@ export const AddContactDocument = gql`
         country
       }
       dob
+      phone
       picture {
         large
         medium
@@ -227,6 +255,62 @@ export function useAddContactMutation(baseOptions?: Apollo.MutationHookOptions<A
 export type AddContactMutationHookResult = ReturnType<typeof useAddContactMutation>;
 export type AddContactMutationResult = Apollo.MutationResult<AddContactMutation>;
 export type AddContactMutationOptions = Apollo.BaseMutationOptions<AddContactMutation, AddContactMutationVariables>;
+export const RemoveContactDocument = gql`
+    mutation removeContact($contactId: String!) {
+  removeContact(contactId: $contactId) {
+    status
+    message
+    result {
+      id
+      gender
+      name {
+        title
+        first
+        last
+      }
+      email
+      location {
+        street
+        city
+        state
+        country
+      }
+      dob
+      phone
+      picture {
+        large
+        medium
+        thumbnail
+      }
+    }
+  }
+}
+    `;
+export type RemoveContactMutationFn = Apollo.MutationFunction<RemoveContactMutation, RemoveContactMutationVariables>;
+
+/**
+ * __useRemoveContactMutation__
+ *
+ * To run a mutation, you first call `useRemoveContactMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveContactMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeContactMutation, { data, loading, error }] = useRemoveContactMutation({
+ *   variables: {
+ *      contactId: // value for 'contactId'
+ *   },
+ * });
+ */
+export function useRemoveContactMutation(baseOptions?: Apollo.MutationHookOptions<RemoveContactMutation, RemoveContactMutationVariables>) {
+        return Apollo.useMutation<RemoveContactMutation, RemoveContactMutationVariables>(RemoveContactDocument, baseOptions);
+      }
+export type RemoveContactMutationHookResult = ReturnType<typeof useRemoveContactMutation>;
+export type RemoveContactMutationResult = Apollo.MutationResult<RemoveContactMutation>;
+export type RemoveContactMutationOptions = Apollo.BaseMutationOptions<RemoveContactMutation, RemoveContactMutationVariables>;
 export const GetContactsDocument = gql`
     query getContacts {
   getContacts {
@@ -245,6 +329,7 @@ export const GetContactsDocument = gql`
       country
     }
     dob
+    phone
     picture {
       large
       medium

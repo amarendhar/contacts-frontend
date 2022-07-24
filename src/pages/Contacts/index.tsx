@@ -1,17 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { useGetContactsQuery } from "generated/graphql";
 import { Button } from "components";
+import useContacts from "./useContacts";
+import ContactItem from "./ContactItem";
 
 const Contacts = () => {
-  const {
-    loading,
-    error,
-    data: { getContacts: contacts = [] } = {},
-  } = useGetContactsQuery({
-    fetchPolicy: "network-only",
-  });
+  const { loading, error, contacts, onRemove } = useContacts();
 
   return (
     <Container>
@@ -27,18 +22,7 @@ const Contacts = () => {
       )}
 
       {contacts.length > 0 ? (
-        <Cards>
-          {contacts.map((contact) => {
-            return (
-              <Card key={contact.id}>
-                <div>{contact.gender}</div>
-                <div>{contact.name.first}</div>
-                <div>{contact.name.last}</div>
-                <div>{contact.email}</div>
-              </Card>
-            );
-          })}
-        </Cards>
+        <ContactItem contacts={contacts} onRemove={onRemove} />
       ) : (
         <div>No contacts found from the list</div>
       )}
@@ -65,13 +49,4 @@ const Error = styled.div`
   span {
     color: red;
   }
-`;
-
-const Cards = styled.div`
-  display: flex;
-  grid-gap: 10px;
-`
-
-const Card = styled.div`
-  box-shadow: 0 0 5px 0 black;
 `;
