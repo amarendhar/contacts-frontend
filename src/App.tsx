@@ -1,32 +1,29 @@
-import React from "react";
-import { useGetContactsQuery } from "generated/graphql";
+import React from 'react'
+import styled from 'styled-components'
+import { Switch, Route } from 'react-router-dom'
+import { Header, Footer } from 'containers'
+import { Contacts, NotFound } from 'pages'
 
-function App() {
-  const {
-    loading,
-    error,
-    data: { getContacts: contacts = [] } = {},
-  } = useGetContactsQuery();
-
+const App = () => {
   return (
-    <div>
-      <header>
-        {loading && <div>Loading...</div>}
-
-        {contacts?.length > 0 ? (
-          contacts.map((contact) => {
-            return (
-              <div key={contact.id}>
-                <div>{contact?.gender}</div>
-              </div>
-            );
-          })
-        ) : (
-          <div>No contacts found from the list</div>
-        )}
-      </header>
-    </div>
-  );
+    <>
+      <Header />
+      <Container>
+        <Switch>
+          <Route exact path="/" component={Contacts} />
+          <Route path="*" component={NotFound} />
+        </Switch>
+      </Container>
+      <Footer />
+    </>
+  )
 }
 
-export default App;
+export default App
+
+const Container = styled.main`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+`
