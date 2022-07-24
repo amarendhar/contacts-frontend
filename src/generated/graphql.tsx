@@ -123,6 +123,33 @@ export type _Service = {
   sdl?: Maybe<Scalars['String']>;
 };
 
+export type AddContactMutationVariables = Exact<{
+  contactInput?: Maybe<ContactInput>;
+}>;
+
+
+export type AddContactMutation = (
+  { __typename?: 'Mutation' }
+  & { addContact?: Maybe<(
+    { __typename?: 'AddContact' }
+    & Pick<AddContact, 'status' | 'message'>
+    & { result: (
+      { __typename?: 'Contact' }
+      & Pick<Contact, 'id' | 'gender' | 'email' | 'dob'>
+      & { name: (
+        { __typename?: 'Name' }
+        & Pick<Name, 'title' | 'first' | 'last'>
+      ), location: (
+        { __typename?: 'Location' }
+        & Pick<Location, 'street' | 'city' | 'state' | 'country'>
+      ), picture?: Maybe<(
+        { __typename?: 'Picture' }
+        & Pick<Picture, 'large' | 'medium' | 'thumbnail'>
+      )> }
+    ) }
+  )> }
+);
+
 export type GetContactsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -145,6 +172,61 @@ export type GetContactsQuery = (
 );
 
 
+export const AddContactDocument = gql`
+    mutation addContact($contactInput: ContactInput) {
+  addContact(contactInput: $contactInput) {
+    status
+    message
+    result {
+      id
+      gender
+      name {
+        title
+        first
+        last
+      }
+      email
+      location {
+        street
+        city
+        state
+        country
+      }
+      dob
+      picture {
+        large
+        medium
+        thumbnail
+      }
+    }
+  }
+}
+    `;
+export type AddContactMutationFn = Apollo.MutationFunction<AddContactMutation, AddContactMutationVariables>;
+
+/**
+ * __useAddContactMutation__
+ *
+ * To run a mutation, you first call `useAddContactMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddContactMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addContactMutation, { data, loading, error }] = useAddContactMutation({
+ *   variables: {
+ *      contactInput: // value for 'contactInput'
+ *   },
+ * });
+ */
+export function useAddContactMutation(baseOptions?: Apollo.MutationHookOptions<AddContactMutation, AddContactMutationVariables>) {
+        return Apollo.useMutation<AddContactMutation, AddContactMutationVariables>(AddContactDocument, baseOptions);
+      }
+export type AddContactMutationHookResult = ReturnType<typeof useAddContactMutation>;
+export type AddContactMutationResult = Apollo.MutationResult<AddContactMutation>;
+export type AddContactMutationOptions = Apollo.BaseMutationOptions<AddContactMutation, AddContactMutationVariables>;
 export const GetContactsDocument = gql`
     query getContacts {
   getContacts {

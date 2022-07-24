@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Switch, Route } from 'react-router-dom'
 import { Header, Footer } from 'containers'
-import { Contacts, NotFound } from 'pages'
+import { Contacts, AddContact, NotFound } from 'pages'
 
 const App = () => {
   return (
@@ -11,6 +11,7 @@ const App = () => {
       <Container>
         <Switch>
           <Route exact path="/" component={Contacts} />
+          <Route exact path="/contacts/add" component={AddContact} />
           <Route path="*" component={NotFound} />
         </Switch>
       </Container>
