@@ -22,7 +22,7 @@ const useAddContact = () => {
 
   const [gender, setGender] = useState("male");
 
-  const [title, setTitle] = useState("mr");
+  const [title, setTitle] = useState("Mr");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
@@ -52,7 +52,7 @@ const useAddContact = () => {
         type: "select",
         name: "title",
         label: "Title",
-        options: ["mr", "ms", "mrs"],
+        options: ["Mr", "Ms", "Mrs"],
         value: title,
         setState: setTitle,
       },

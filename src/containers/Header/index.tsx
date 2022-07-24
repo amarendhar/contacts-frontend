@@ -17,7 +17,7 @@ export default Header;
 const Container = styled.header`
   position: sticky;
   width: 100%;
-  
+
   display: flex;
   justify-content: space-around;
 

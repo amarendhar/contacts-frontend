@@ -12,15 +12,23 @@ type ContactItemProps = {
 const ContactItem = ({ contact, onSelect, onRemove }: ContactItemProps) => {
   return (
     <Container>
-      <Remove onClick={() => onRemove(contact.id)}>X</Remove>
-      <div>{contact.gender}</div>
-      <div>{contact.name.first}</div>
-      <div>{contact.name.last}</div>
+      {contact?.picture?.large && (
+        <Img
+          src={contact.picture.large}
+          alt={""}
+          width="100%"
+          gender={contact.gender}
+        />
+      )}
+      <Name>
+        {contact.name.title} {contact.name.first} {contact.name.last}
+      </Name>
       <div>
         <a href={`mailto:${contact.email}`}>{contact.email}</a>
       </div>
 
       <More onClick={() => onSelect(contact.id)}>More Information</More>
+      <Remove onClick={() => onRemove(contact.id)}>X</Remove>
     </Container>
   );
 };
@@ -29,10 +37,18 @@ export default ContactItem;
 
 const Container = styled.div`
   position: relative;
-  padding: ${({ theme }) => theme.space.md}px;
+
+  text-align: center;
+
   border-radius: ${({ theme }) => theme.radii.lg}px;
+  padding: ${({ theme }) => theme.space.md}px;
 
   box-shadow: 0 0 5px 0 black;
+`;
+
+const Img = styled.img<{ gender: string }>`
+  border-radius: 50%;
+  border: 1px solid ${({ gender }) => gender === 'male' ? 'red' : 'green'};
 `;
 
 const Remove = styled(Button)`
@@ -42,6 +58,10 @@ const Remove = styled(Button)`
   border: 0 !important;
 
   padding: 8px 12px;
+`;
+
+const Name = styled.h4`
+  margin: ${({ theme }) => theme.space.md}px;
 `;
 
 const More = styled(Button)`

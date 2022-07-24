@@ -1,8 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Switch, Route } from 'react-router-dom'
-import { Header, Footer } from 'containers'
-import { Contacts, AddContact, NotFound } from 'pages'
+import React from "react";
+import styled from "styled-components";
+import { Switch, Route } from "react-router-dom";
+import { Header, Footer } from "containers";
+import { Contacts, AddContact, NotFound } from "pages";
 
 const App = () => {
   return (
@@ -17,14 +17,14 @@ const App = () => {
       </Container>
       <Footer />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
 
 const Container = styled.main`
   display: flex;
   flex: 1;
   flex-direction: column;
   align-items: center;
-`
+`;

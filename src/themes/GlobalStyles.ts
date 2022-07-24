@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components'
-import { theme } from './ThemeProvider'
+import { createGlobalStyle } from "styled-components";
+import { theme } from "./ThemeProvider";
 
 const GlobalStyle = createGlobalStyle<{ theme: typeof theme }>`
   body {
@@ -25,6 +25,6 @@ const GlobalStyle = createGlobalStyle<{ theme: typeof theme }>`
     
     padding-bottom: 40px;
   }
-`
+`;
 
-export default GlobalStyle
+export default GlobalStyle;

@@ -125,5 +125,5 @@ const SelectContainer = styled.select`
   padding: ${({ theme }) => theme.space.md}px;
   margin-bottom: ${({ theme }) => theme.space.md}px;
   font-size: ${({ theme }) => theme.fontSizes.md}px;
-  text-transform: capitalize
+  text-transform: capitalize;
 `;

@@ -32,10 +32,10 @@ const ButtonContainer = styled.button`
   border-radius: ${({ theme }) => theme.space.sm}px;
   border: 1px solid rgba(0, 0, 0, 0.5);
   padding: 6px 16px;
-  
+
   background-color: transparent;
   color: black;
-  
+
   font-size: 14px;
 
   user-select: none;

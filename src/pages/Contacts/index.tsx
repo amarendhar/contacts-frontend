@@ -7,8 +7,15 @@ import ContactItem from "./ContactItem";
 import ContactView from "./ContactView";
 
 const Contacts = () => {
-  const { loading, error, contacts, onSelect, onRemove, selectedContact, onCloseModal } =
-    useContacts();
+  const {
+    loading,
+    error,
+    contacts,
+    onSelect,
+    onRemove,
+    selectedContact,
+    onCloseModal,
+  } = useContacts();
 
   return (
     <Container>
@@ -69,6 +76,7 @@ const Error = styled.div`
 
 const ContactsContainer = styled.div`
   display: flex;
+  justify-content: center;
   grid-gap: 10px;
   flex-wrap: wrap;
 `;
