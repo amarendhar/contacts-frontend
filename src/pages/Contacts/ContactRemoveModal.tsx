@@ -17,14 +17,14 @@ const ContactRemoveModal = ({
   return (
     <Modal onClose={onClose}>
       <Container>
-        <div>
+        <Title>
           Are you sure you want to remove this contact&nbsp;
           <b>
             {contact.name.title}&nbsp;
             {contact.name.first}&nbsp;
             {contact.name.last}
           </b>
-        </div>
+        </Title>
         <ButtonsContainer>
           <Button onClick={() => handleRemoveContact(contact.id)}>Yes</Button>
           <Button onClick={onClose}>Cancel</Button>
@@ -42,6 +42,10 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+const Title = styled.div`
+  text-align: center;
+`
 
 const ButtonsContainer = styled.div`
   display: flex;

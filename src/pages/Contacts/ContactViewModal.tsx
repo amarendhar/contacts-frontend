@@ -78,4 +78,9 @@ const Content = styled.div`
   > :nth-child(odd) {
     font-weight: bold;
   }
+
+  > :nth-child(even) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
