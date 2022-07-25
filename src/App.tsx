@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Switch, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Header, Footer } from "containers";
 import { Contacts, AddContact, NotFound } from "pages";
 
@@ -16,6 +18,7 @@ const App = () => {
         </Switch>
       </Container>
       <Footer />
+      <ToastContainer />
     </>
   );
 };

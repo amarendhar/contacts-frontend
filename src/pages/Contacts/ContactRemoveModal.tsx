@@ -45,7 +45,7 @@ const Container = styled.div`
 
 const Title = styled.div`
   text-align: center;
-`
+`;
 
 const ButtonsContainer = styled.div`
   display: flex;

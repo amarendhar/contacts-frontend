@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { toast } from "react-toastify";
 import {
   Contact,
   useGetContactsQuery,
@@ -127,11 +128,21 @@ const useContacts = () => {
         },
       });
 
-      if (data?.removeContact?.status === "success") {
+      const status = data?.removeContact?.status;
+
+      if (status === "success") {
         setContacts((_contacts) =>
           _contacts.filter((contact) => contact.id !== contactId)
         );
-        onCloseModal()
+        onCloseModal();
+
+        toast.success(data?.removeContact?.message, {
+          autoClose: 6000,
+        });
+      } else if (status === "failed") {
+        toast.error(data?.removeContact?.message, {
+          autoClose: 6000,
+        });
       }
     },
     [removeContactMutation, setContacts, onCloseModal]

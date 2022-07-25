@@ -1,5 +1,6 @@
 import { useState, useMemo, useCallback } from "react";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useAddContactMutation } from "generated/graphql";
 
 type ContactFields = {
@@ -197,8 +198,18 @@ const useAddContact = () => {
       },
     });
 
-    if (data?.addContact?.status === "success") {
+    const status = data?.addContact?.status;
+
+    if (status === "success") {
       history.push("/");
+
+      toast.success(data?.addContact?.message, {
+        autoClose: 6000,
+      });
+    } else if (status === "failed") {
+      toast.error(data?.addContact?.message, {
+        autoClose: 6000,
+      });
     }
   }, [history, addContactMutation, fields]);
 
