@@ -3,6 +3,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ### How to run project
+* Install NodeJS from [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
 * Install Docker-Desktop from [https://docs.docker.com/desktop/install/mac-install/](https://docs.docker.com/desktop/install/mac-install/)
 * `npm install`
 * `npm run start:docker`
