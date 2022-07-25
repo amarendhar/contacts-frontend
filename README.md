@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+### How to run project
+* Install Docker-Desktop from [https://docs.docker.com/desktop/install/mac-install/](https://docs.docker.com/desktop/install/mac-install/)
+* `npm install`
+* `npm run start:docker`
+* `npm run start:dev`
+
 ## Available Scripts
 
 In the project directory, you can run:
