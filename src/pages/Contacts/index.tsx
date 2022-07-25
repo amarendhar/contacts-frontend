@@ -35,16 +35,18 @@ const Contacts = () => {
         <NavLink to="/contacts/add">
           <Button>Add Contact</Button>
         </NavLink>
-        <Filter
-          type="select"
-          placeholder={"Filter"}
-          defaultValue={filter}
-          value={filter}
-          onChange={(v) => {
-            setFilter(v);
-          }}
-          options={["Filter (none)", "A-Z", "Z-A", "DOB (↓)", "DOB (↑)"]}
-        />
+        {contacts.length > 0 && (
+          <Filter
+            type="select"
+            placeholder={"Filter"}
+            defaultValue={filter}
+            value={filter}
+            onChange={(v) => {
+              setFilter(v);
+            }}
+            options={["Filter (none)", "A-Z", "Z-A", "DOB (↓)", "DOB (↑)"]}
+          />
+        )}
       </Facets>
       {error && (
         <Error>
