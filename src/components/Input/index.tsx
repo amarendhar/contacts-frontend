@@ -92,6 +92,7 @@ const Input = ({
             setText(_text);
             onChange(_text);
           }}
+          required
           {...props}
         />
       )}
@@ -126,4 +127,6 @@ const SelectContainer = styled.select`
   margin-bottom: ${({ theme }) => theme.space.md}px;
   font-size: ${({ theme }) => theme.fontSizes.md}px;
   text-transform: capitalize;
+
+  cursor: pointer;
 `;

@@ -5,11 +5,11 @@ import { Button } from "components";
 
 type ContactItemProps = {
   contact: Contact;
-  onSelect: (contactId: string) => void;
-  onRemove: (contactId: string) => void;
+  handleViewMoreContact: (contactId: string) => void;
+  onRemoveContact: (contactId: string) => void;
 };
 
-const ContactItem = ({ contact, onSelect, onRemove }: ContactItemProps) => {
+const ContactItem = ({ contact, handleViewMoreContact, onRemoveContact }: ContactItemProps) => {
   return (
     <Container>
       {contact?.picture?.large && (
@@ -27,8 +27,8 @@ const ContactItem = ({ contact, onSelect, onRemove }: ContactItemProps) => {
         <a href={`mailto:${contact.email}`}>{contact.email}</a>
       </div>
 
-      <More onClick={() => onSelect(contact.id)}>More Information</More>
-      <Remove onClick={() => onRemove(contact.id)}>X</Remove>
+      <More onClick={() => handleViewMoreContact(contact.id)}>More Information</More>
+      <Remove onClick={() => onRemoveContact(contact.id)}>X</Remove>
     </Container>
   );
 };
@@ -49,6 +49,8 @@ const Container = styled.div`
 const Img = styled.img<{ gender: string }>`
   border-radius: 50%;
   border: 1px solid ${({ gender }) => gender === 'male' ? 'red' : 'green'};
+  width: 100px;
+  padding: 3px;
 `;
 
 const Remove = styled(Button)`

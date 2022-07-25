@@ -1,34 +1,57 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { Button, Modal } from "components";
+import { Button, Input } from "components";
 import useContacts from "./useContacts";
 import ContactItem from "./ContactItem";
-import ContactView from "./ContactView";
+import ContactViewModal from "./ContactViewModal";
+import ContactRemoveModal from "./ContactRemoveModal";
 
 const Contacts = () => {
   const {
     loading,
     error,
     contacts,
-    onSelect,
-    onRemove,
-    selectedContact,
+    countries,
+    selectedContactToView,
+    selectedContactToRemove,
+    filter,
+    setFilter,
+    handleViewMoreContact,
+    onRemoveContact,
+    handleRemoveContact,
     onCloseModal,
   } = useContacts();
 
   return (
     <Container>
-      <NavLink to="/contacts/add">
-        <Button>Add Contact</Button>
-      </NavLink>
-      <h2>List of Contacts</h2>
-      {loading && <div>Loading...</div>}
+      {contacts.length > 0 && (
+        <h2>
+          {contacts.length} Contacts from {countries.length}
+          &nbsp;{countries.length > 1 ? "countries" : "country"}
+        </h2>
+      )}
+      <Facets>
+        <NavLink to="/contacts/add">
+          <Button>Add Contact</Button>
+        </NavLink>
+        <Filter
+          type="select"
+          placeholder={"Filter"}
+          defaultValue={filter}
+          value={filter}
+          onChange={(v) => {
+            setFilter(v);
+          }}
+          options={["Filter (none)", "A-Z", "Z-A", "DOB (↓)", "DOB (↑)"]}
+        />
+      </Facets>
       {error && (
         <Error>
           Error Query failed <span>{error?.message}</span>
         </Error>
       )}
+      {loading && <div>Loading...</div>}
 
       {contacts.length > 0 ? (
         <ContactsContainer>
@@ -36,18 +59,26 @@ const Contacts = () => {
             <ContactItem
               key={contact.id}
               contact={contact}
-              onSelect={onSelect}
-              onRemove={onRemove}
+              handleViewMoreContact={handleViewMoreContact}
+              onRemoveContact={onRemoveContact}
             />
           ))}
         </ContactsContainer>
       ) : (
         <div>No contacts found from the list</div>
       )}
-      {selectedContact && (
-        <Modal onClose={onCloseModal}>
-          <ContactView contact={selectedContact} />
-        </Modal>
+      {selectedContactToView && (
+        <ContactViewModal
+          contact={selectedContactToView}
+          onClose={onCloseModal}
+        />
+      )}
+      {selectedContactToRemove && (
+        <ContactRemoveModal
+          contact={selectedContactToRemove}
+          onClose={onCloseModal}
+          handleRemoveContact={handleRemoveContact}
+        />
       )}
     </Container>
   );
@@ -64,6 +95,16 @@ const Container = styled.div`
   max-width: 1200px;
   width: 100%;
   padding: ${({ theme }) => theme.space.lg}px;
+`;
+
+const Facets = styled.div`
+  display: flex;
+  grid-gap: ${({ theme }) => theme.space.lg}px;
+  margin-bottom: ${({ theme }) => theme.space.lg}px;
+`;
+
+const Filter = styled(Input)`
+  padding: 4px;
 `;
 
 const Error = styled.div`

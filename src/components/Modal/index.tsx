@@ -4,11 +4,11 @@ import { Button } from "components";
 import { useOnClickOutside } from "hooks";
 
 type ModalProps = {
-  onClose: () => void;
+  onClose?: () => void;
   children: React.ReactNode;
 };
 
-const Modal = ({ onClose, children }: ModalProps) => {
+const Modal = ({ onClose = () => {}, children }: ModalProps) => {
   const ref = useRef<RefObject<HTMLElement>>();
   // @ts-ignore
   useOnClickOutside({ ref, handler: onClose });
@@ -47,6 +47,7 @@ const Content = styled.div`
   margin: auto;
   padding: 20px;
   width: 80%;
+  max-width: 1200px;
 
   background-color: #fefefe;
 `;
