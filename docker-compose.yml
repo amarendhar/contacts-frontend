@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  app:
+    image: amarendharganji/contact-services:latest
+    container_name: contacts-services-container-FE
+    ports:
+      - 8001:8001
+    depends_on: 
+      - db
+    links:
+      - db
+    restart: always
+    environment:
+      WAIT_HOSTS: db:27017
+      DATABASE_HOST: mongodb://db:27017
+  db:
+    image: mongo
+    container_name: contacts-service-db-FE
+    ports:
+      - 27017:27017
+    restart: always
